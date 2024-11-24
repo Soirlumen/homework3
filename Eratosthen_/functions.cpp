@@ -1,13 +1,12 @@
  #include "header.h"
 
-
 int vstup(){
     std::string l;
     vypiš("Zadej cele kladne cislo: ");
     std::cin >> l;
     try {
         int b = std::stoi(l);
-        if (b > 0) {
+        if (b > -1) {
             return b;
         } else {
             vypiš("zadane cislo '",b,"' neni kladne.\n");
@@ -28,13 +27,13 @@ bool je_dělitelné(int i, int j){
 void vypištab(bool tabule[], int velikost_tabulky){
     std::cout<<"vypisuju prvocisla od 2 do "<<velikost_tabulky-1<<std::endl;
     int h=0;
-    for (int k=0;k<=velikost_tabulky;k++){
+    for (int k=0;k<velikost_tabulky;k++){
         if (tabule[k]){
-            std::cout<<k<<std::endl;
+            vypiš(k,"\n");
             h++;
         }
     }
-    std::cout<<"pocet vsech prvocisel: "<<h<<std::endl;
+    vypiš("pocet vsech prvocisel: ", h);
 }
 
 void hledam_prvocislo(bool tabule[], int l, int velikost_tabulky)
@@ -43,6 +42,7 @@ void hledam_prvocislo(bool tabule[], int l, int velikost_tabulky)
     for(int i=ctverec;i<=velikost_tabulky;i++){
         if (je_dělitelné(i, l)){
             tabule[i]=false;
+            //vypiš(i," je delitelne ",l,"\\n");
             //std::cout<<"cislo "<<i<<" je delitelne " <<l<<std::endl;
         }
     }
@@ -57,13 +57,15 @@ void init(bool tabule[])
 void eratosyto()
 {
     int velikostTabulky = vstup()+1;
-    switch (velikostTabulky)
+    //musim davat pozor, protoze chci pracovat s tabulkou od 0 do vstupniho cisla, takže o 1 vetsi nez zadal uzivatel
+    switch (velikostTabulky) 
     {
     case -1:
         vypiš("koncim program papa.");
         break;
     case 1:
-        vypiš("nebudu delat tabulku s velikosti ", velikostTabulky, ", koncim program papa.");
+    case 2:
+        vypiš("nebudu delat tabulku s velikosti ", velikostTabulky-1,", koncim program papa.");
         break;
     
     default:
